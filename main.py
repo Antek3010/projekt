@@ -116,3 +116,16 @@ def gui_main():
             get_grouped_map(dataset, f"{type_}_map.html")
             webbrowser.open(f"{type_}_map.html")
 
+        # UI
+        btn_frame = tk.Frame(window)
+        btn_frame.pack(pady=5)
+
+        tk.Button(btn_frame, text="Dodaj", command=add, width=12).grid(row=0, column=0, padx=5)
+        tk.Button(btn_frame, text="Usuń", command=remove, width=12).grid(row=0, column=1, padx=5)
+        tk.Button(btn_frame, text="Aktualizuj", command=update, width=12).grid(row=0, column=2, padx=5)
+        tk.Button(btn_frame, text="Mapa", command=show_map, width=12).grid(row=0, column=3, padx=5)
+
+        listbox = tk.Listbox(window, width=60, height=15)
+        listbox.pack(padx=10, pady=10)
+
+        refresh_list()
