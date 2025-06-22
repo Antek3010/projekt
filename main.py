@@ -129,3 +129,22 @@ def gui_main():
         listbox.pack(padx=10, pady=10)
 
         refresh_list()
+
+    def map_clients_of_factory():
+        name = simpledialog.askstring("Zakład przemysłowy", "Podaj nazwę zakładu przemysłowego:")
+        filtered = [c for c in clients if c['factory'] == name]
+        if not filtered:
+            messagebox.showinfo("Brak danych", "Brak klientów dla tego zakładu.")
+            return
+        get_grouped_map(filtered, "clients_of_factory.html")
+        open_map("clients_of_factory.html")
+
+    def map_employees_of_factory():
+            name = simpledialog.askstring("Zakład przemysłowy", "Podaj nazwę zakładu:")
+            filtered = [e for e in employees if e['factory'] == name]
+            if not filtered:
+                messagebox.showinfo("Brak danych", "Brak pracowników dla tego zakładu.")
+                return
+            get_grouped_map(filtered, "employees_of_factory.html")
+            open_map("employees_of_factory.html")
+
