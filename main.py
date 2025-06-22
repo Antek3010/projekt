@@ -112,3 +112,7 @@ def gui_main():
                 }
                 refresh_list()
 
+        def show_map():
+            get_grouped_map(dataset, f"{type_}_map.html")
+            webbrowser.open(f"{type_}_map.html")
+
