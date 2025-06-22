@@ -67,3 +67,48 @@ def gui_main():
                 return
             dataset.pop(idx[0])
             refresh_list()
+
+        def update():
+            idx = listbox.curselection()
+            if not idx:
+                messagebox.showwarning("Uwaga", "Nie zaznaczono elementu do edycji.")
+                return
+
+            current = dataset[idx[0]]
+            new_name = simpledialog.askstring("Nowa nazwa", "Nowa nazwa:", initialvalue=current["name"])
+            new_location = simpledialog.askstring("Nowa lokalizacja", "Nowa lokalizacja:",
+                                                  initialvalue=current["location"])
+
+            if not new_name or not new_location:
+                messagebox.showwarning("Błąd", "Musisz podać nazwę i lokalizację.")
+                return
+
+            if type_ in ["clients", "employees"]:
+                factory_names = [s["name"] for s in factory]
+
+                factory_window = tk.Toplevel(window)
+                factory_window.title("Wybierz nowy zakład przemysłowy")
+
+                tk.Label(factory_window, text="Wybierz nowy zakład przemysłowy:").pack(pady=5)
+                selected_factory = tk.StringVar()
+                selected_factory.set(current.get("factory", factory_names[0]))
+
+                tk.OptionMenu(factory_window, selected_factory, *factory_names).pack(pady=5)
+
+                def confirm_update():
+                    dataset[idx[0]] = {
+                        "name": new_name,
+                        "location": new_location,
+                        "station": selected_factory.get()
+                    }
+                    factory_window.destroy()
+                    refresh_list()
+
+                tk.Button(factory_window, text="Zatwierdź", command=confirm_update).pack(pady=10)
+            else:
+                dataset[idx[0]] = {
+                    "name": new_name,
+                    "location": new_location
+                }
+                refresh_list()
+
