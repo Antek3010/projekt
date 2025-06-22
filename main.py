@@ -43,11 +43,11 @@ def gui_main():
                 tk.OptionMenu(factory_window, selected_factory, *factory_names).pack(pady=5)
 
                 def confirm_factory():
-                    station = selected_factory.get()
+                    factory = selected_factory.get()
                     dataset.append({
                         "name": name,
                         "location": location,
-                        "station": station
+                        "factory": factory
                     })
                     factory_window.destroy()
                     refresh_list()
@@ -147,4 +147,22 @@ def gui_main():
                 return
             get_grouped_map(filtered, "employees_of_factory.html")
             open_map("employees_of_factory.html")
+
+    root = tk.Tk()
+    root.title("System zarządzania siecią zakładów przemysłowych")
+    root.geometry('1000x600')
+
+    tk.Button(root, text="Zakłady przemysłowe", command=lambda: make_menu("Zakłady przemysłowy", factory, "stations")).pack(pady=10)
+    tk.Button(root, text="Pracownicy", command=lambda: make_menu("Pracownicy", employees, "employees")).pack(pady=10)
+    tk.Button(root, text="Klienci", command=lambda: make_menu("Klienci", clients, "clients")).pack(pady=10)
+
+    tk.Button(root, text="Mapa klientów wybranego zakładu", command=map_clients_of_factory).pack(pady=10)
+    tk.Button(root, text="Mapa pracowników wybranego zakładu", command=map_employees_of_factory).pack(pady=10)
+
+    tk.Button(root, text="Zamknij", command=root.destroy).pack(pady=20)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    gui_main()
 
