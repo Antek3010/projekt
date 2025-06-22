@@ -60,3 +60,10 @@ def gui_main():
                 })
                 refresh_list()
 
+        def remove():
+            idx = listbox.curselection()
+            if not idx:
+                messagebox.showwarning("Uwaga", "Nie zaznaczono elementu do usunięcia.")
+                return
+            dataset.pop(idx[0])
+            refresh_list()
